@@ -49,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
 class MainActivity : ComponentActivity() {
@@ -92,12 +93,20 @@ fun TipTimeLayout() {
             label = R.string.bill_amount,
             value = amountInput,
             onValueChange = { amountInput = it},
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
             modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth()
         )
         EditNumberField(
             label = R.string.how_was_the_service,
             value = tipInput,
             onValueChange = { tipInput = it },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
             modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth()
         )
         Text(
@@ -129,6 +138,7 @@ fun TipTimeLayoutPreview() {
 @Composable
 fun EditNumberField(
     @StringRes label: Int,
+    keyboardOptions: KeyboardOptions,
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -138,7 +148,7 @@ fun EditNumberField(
         onValueChange = onValueChange,
         label = { Text(stringResource(label))},
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = keyboardOptions,
         modifier = modifier
     )
 }
